@@ -1,18 +1,22 @@
 import { FC, useEffect, useState } from "react";
 import Link from "next/link";
 import styles from "./index.module.css";
-import { listProducts, Product } from "../lib/product";
+import { listProducts } from "../lib/product";
 import { Layout } from "../components/Layout";
+import { Product } from "../lib/types";
+import { sumCartItemsCount } from "../lib/cart";
 
 const TopPage: FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
+  const [cartItemsCount, setCartItemsCount] = useState(0);
 
   useEffect(() => {
     listProducts().then((products) => setProducts(products));
+    setCartItemsCount(sumCartItemsCount);
   }, []);
 
   return (
-    <Layout>
+    <Layout cartItemsCount={cartItemsCount}>
       <ul className={styles.list}>
         {products.map((product) => (
           <li key={product.id} className={styles.listItem}>

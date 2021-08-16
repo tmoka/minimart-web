@@ -1,21 +1,5 @@
 import { graphqlRequest } from "./graphqlClient";
-
-export type Product = {
-  id: string;
-  name: string;
-  price: number;
-  description: string;
-  imageUrl: string;
-};
-
-export type CartItem = {
-  product: Product;
-  quantity: number;
-};
-
-export type CartItems = {
-  cartItems: CartItem[];
-};
+import { Product } from "./types";
 
 const listProductsQuery = `
   query listProducts {

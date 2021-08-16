@@ -1,32 +1,27 @@
 import { FC, useEffect, useState } from "react";
 import styles from "../index.module.css";
-import { getProductItem, Product } from "../../lib/product";
+import { getProductItem } from "../../lib/product";
+import { Product } from "../../lib/types";
 import { Layout } from "../../components/Layout";
 import { useRouter } from "next/dist/client/router";
+import { STORAGE_KEY } from "../../lib/constants";
+import { addProductToCart, sumCartItemsCount } from "../../lib/cart";
 
 const ProductPage: FC = () => {
   const [productItem, setProductItem] = useState<Product | undefined>();
+  const [cartItemsCount, setCartItemsCount] = useState(0);
 
   const router = useRouter();
-  const id = String(router.query.id);
+  const id = router.query.id ? String(router.query.id) : null;
 
   useEffect(() => {
+    if (id === null) return;
     getProductItem(id).then((product) => setProductItem(product));
+    setCartItemsCount(sumCartItemsCount);
   }, [id]);
 
-  const addCartItem = () => {
-    if (productItem !== undefined) {
-      /*presentCartItems.forEach((cartItem) => {
-        if (cartItem.product.id === productItem.id) {
-          cartItem.quantity += 1;
-        }
-      });*/
-      localStorage.setItem("presentCartItems", JSON.stringify([{ product: productItem, quantity: 1 }]));
-    }
-  };
-
   return (
-    <Layout>
+    <Layout cartItemsCount={cartItemsCount}>
       <div className={"productWrapper"}>
         {productItem === undefined ? (
           <p>製品が見つかりませんでした。IDを確認してください。</p>
@@ -38,7 +33,7 @@ const ProductPage: FC = () => {
             </div>
             <div className={styles.productName}>{productItem.name}</div>
             <div>{productItem.description}</div>
-            <button onClick={addCartItem}>カートに追加する</button>
+            <button onClick={() => addProductToCart(productItem)}>カートに追加する</button>
           </div>
         )}
       </div>
