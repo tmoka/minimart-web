@@ -3,7 +3,7 @@ import { useRouter } from "next/dist/client/router";
 import { Layout } from "../components/Layout";
 import { useState } from "react";
 import { STORAGE_KEY } from "../lib/constants";
-import { addProductToCart, sumCartItemsCount, useCartItems } from "../lib/cart";
+import { addProductToCart, reduceProductInCart, sumCartItemsCount, useCartItems } from "../lib/cart";
 
 const CartPage: FC = () => {
   const router = useRouter();
@@ -31,8 +31,23 @@ const CartPage: FC = () => {
                 {item.product.name} {item.product.price}円
               </div>
               <div /*className={styles.quantity}*/>{item.quantity}個</div>
-              <button onClick={() => addProductToCart(item.product)}>+</button>
-              <button>-</button>
+              <button
+                onClick={() => {
+                  addProductToCart(item.product);
+                  setCartItemsCount(sumCartItemsCount);
+                  useCartItems;
+                }}
+              >
+                +
+              </button>
+              <button
+                onClick={() => {
+                  reduceProductInCart(item.product);
+                  setCartItemsCount(sumCartItemsCount);
+                }}
+              >
+                -
+              </button>
             </div>
           </li>
         ))}

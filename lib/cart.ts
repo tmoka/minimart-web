@@ -14,6 +14,18 @@ export const addProductToCart = (product: Product): void => {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(cartItems));
 };
 
+export const reduceProductInCart = (product: Product): void => {
+  let cartItems: CartItem[] = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+  const item = cartItems.find((item) => item.product.id === product.id);
+  if (item && item.quantity > 0) {
+    item.quantity--;
+  }
+  if (item && item.quantity === 0) {
+    cartItems = cartItems.filter((item) => item.product.id !== product.id);
+  }
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(cartItems));
+};
+
 export const sumCartItemsCount = (): number => {
   const cartItems: CartItem[] = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
   return cartItems.reduce((sum, item) => sum + item.quantity, 0);

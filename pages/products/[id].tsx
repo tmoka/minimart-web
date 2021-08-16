@@ -4,7 +4,7 @@ import { getProductItem } from "../../lib/product";
 import { Product } from "../../lib/types";
 import { Layout } from "../../components/Layout";
 import { useRouter } from "next/dist/client/router";
-import { STORAGE_KEY } from "../../lib/constants";
+
 import { addProductToCart, sumCartItemsCount } from "../../lib/cart";
 
 const ProductPage: FC = () => {
