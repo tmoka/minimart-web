@@ -18,7 +18,14 @@ const ProductPage: FC = () => {
   if (presentCartItems !== null) {
     JSON.parse(presentCartItems);
   }
-  console.log(presentCartItems);
+
+  const presentCartItemsCollection = Object.keys(localStorage).map((key) => {
+    return {
+      key: key,
+      value: localStorage.getItem(key),
+    };
+  });
+  console.log(presentCartItemsCollection);
 
   const addCartItem = () => {
     if (productItem !== undefined) {
