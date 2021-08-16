@@ -8,6 +8,15 @@ export type Product = {
   imageUrl: string;
 };
 
+export type CartItem = {
+  product: Product;
+  quantity: number;
+};
+
+export type CartItems = {
+  cartItems: CartItem[];
+};
+
 const listProductsQuery = `
   query listProducts {
     products {
