@@ -33,7 +33,14 @@ const ProductPage: FC = () => {
             </div>
             <div className={styles.productName}>{productItem.name}</div>
             <div>{productItem.description}</div>
-            <button onClick={() => addProductToCart(productItem)}>カートに追加する</button>
+            <button
+              onClick={() => {
+                addProductToCart(productItem);
+                setCartItemsCount(sumCartItemsCount);
+              }}
+            >
+              カートに追加する
+            </button>
           </div>
         )}
       </div>
