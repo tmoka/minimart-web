@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import styles from "../index.module.css";
-import { CartItems, getProductItem, Product } from "../../lib/product";
+import { getProductItem, Product } from "../../lib/product";
 import { Layout } from "../../components/Layout";
 import { useRouter } from "next/dist/client/router";
 
@@ -14,19 +14,6 @@ const ProductPage: FC = () => {
     getProductItem(id).then((product) => setProductItem(product));
   }, [id]);
 
-  const presentCartItems = localStorage.getItem("presentCartItems");
-  if (presentCartItems !== null) {
-    JSON.parse(presentCartItems);
-  }
-
-  const presentCartItemsCollection = Object.keys(localStorage).map((key) => {
-    return {
-      key: key,
-      value: localStorage.getItem(key),
-    };
-  });
-  console.log(presentCartItemsCollection);
-
   const addCartItem = () => {
     if (productItem !== undefined) {
       /*presentCartItems.forEach((cartItem) => {
@@ -34,13 +21,7 @@ const ProductPage: FC = () => {
           cartItem.quantity += 1;
         }
       });*/
-      localStorage.setItem(
-        "presentCartItems",
-        JSON.stringify([
-          { product: productItem, quantity: 1 },
-          { product: productItem, quantity: 2 },
-        ])
-      );
+      localStorage.setItem("presentCartItems", JSON.stringify([{ product: productItem, quantity: 1 }]));
     }
   };
 
